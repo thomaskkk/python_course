@@ -1,5 +1,4 @@
 from python_pytest.basics import add
-
 def test_add_can_add_numbers():
     # given
     num = 3

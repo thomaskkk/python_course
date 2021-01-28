@@ -22,6 +22,7 @@ def cheque_por_extenso(number):
         else:
             result_string_reais = ''.join(result_dict_reais)
         result_string_reais += " reais"
+    #extract milhar
 
     #return string
     if result_string_centavos != "" and result_string_reais != "":
@@ -46,13 +47,12 @@ def numero_para_extenso(number_as_str):
     
     split_numbers = []
     if len(str(number_as_str)) > 1:
-        split_numbers = [int(i) for i in number_as_str]
+        split_numbers = [int(i) for i in str(number_as_str)]
         split_numbers.reverse()
     else:
         split_numbers.append(number_as_str)
 
     result_dict = []
-    team_10 = False
     for p in range(len(split_numbers)):
         if p == 2 and split_numbers[p] != 0:
             result_dict.insert(0, extenso_900.get(split_numbers[p]))
@@ -63,13 +63,11 @@ def numero_para_extenso(number_as_str):
             number = ''.join(map(str, number))
             result_dict.pop()
             result_dict.append(extenso_19.get(int(number)))
-            break
         elif p == 1 and split_numbers[p] != 0:
             result_dict.insert(0, extenso_90.get(split_numbers[p]))
         elif p == 0 and split_numbers[p] != 0:
-            result_dict.insert(0, extenso_9.get(split_numbers[p]))
-            
+            result_dict.insert(0, extenso_9.get(split_numbers[p]))  
     return result_dict
 
 if __name__ == "__main__":
-    print(cheque_por_extenso(2.15))
+    print(cheque_por_extenso(15415.16))

@@ -1,6 +1,7 @@
-#image:
-#  file: .gitpod.Dockerfile
-
 tasks:
   - init: pip3 install -r requirements.txt
-    command: python3 main.py
+
+vscode:
+  extensions:
+    - hbenl.vscode-test-explorer@2.19.5:yg+hg6b1O51L7NliE9pc5Q==
+    - littlefoxteam.vscode-python-test-adapter@0.6.5:M/0xh/MNGJTptXts7fD1Ug==

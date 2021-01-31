@@ -1,4 +1,6 @@
 # cat requirements.txt 
 
 pytest>=6.2.2
-pillow>=810
+pillow>=8.1.0
+flake8>=3.8.4
+requests>=2.25.1

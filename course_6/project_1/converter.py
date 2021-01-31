@@ -22,19 +22,17 @@ def convert_img_size(src_img, dest_img):
     """Convert images to the desired width, height and format"""
     try:
         im = Image.open(src_img)
+        im.resize((img_width, img_height)).convert('RGB').save(dest_img, img_format)
     except:
         print("Not a valid source image: " + src_img)
-    
-    im.resize((img_width, img_height)).convert('RGB').save(dest_img, img_format)
 
 def convert_img_orientation(src_img, dest_img):
     """Rotate images and save with the desired format"""
     try:
         im = Image.open(src_img)
+        im.rotate(img_rotate).convert('RGB').save(dest_img, img_format)
     except:
         print("Not a valid source image: " + src_img)
-    
-    im.rotate(img_rotate).convert('RGB').save(dest_img, img_format)
 
 if __name__ == '__main__':
     src_dir = "/home/thomas/python_course/course_6/project_1/images/"

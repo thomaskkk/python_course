@@ -4,9 +4,6 @@ import os
 import json
 import requests
 
-# src_dir = "/data/feedback"
-src_dir = "/home/thomas/python_course/course_6/project_2/"
-
 
 def get_feedback_files(path):
     """Return a list of files from the source dir and return them as a list"""
@@ -22,16 +19,17 @@ def get_feedback_files(path):
 def txt_to_dictionary(src_dir, txt_file):
     """From a given feedback txt file that follows template returns a list"""
     # transform file contents to dictionary "title", "name", "date", "feedback"
-    dictionary = []
+    dictionary = {}
     with open(src_dir + txt_file) as file:
+        print("Processing file: {}".format(file))
         line = file.readline().strip('\n')
-        dictionary.append({"title": line})
+        dictionary.update({"title": line})
         line = file.readline().strip('\n')
-        dictionary.append({"name": line})
+        dictionary.update({"name": line})
         line = file.readline().strip('\n')
-        dictionary.append({"date": line})
+        dictionary.update({"date": line})
         lines = file.readlines()
-        dictionary.append({"feedback": "".join(lines).replace('\n', '')})
+        dictionary.update({"feedback": "".join(lines).replace('\n', '')})
     return dictionary
 
 
@@ -44,12 +42,19 @@ def serialize_dict(dictionary):
 def send_to_endpoint(serialized_data, url):
     """Send the serialized data to url"""
     # use requests to post to endpoint
+    print("Sending JSON to: {}".format(url))
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post(url, headers=headers, data=serialized_data)
     # check for errors response
-    return response
+    r.raise_for_status()
+    return r
 
 
 if __name__ == '__main__':
+    src_dir = "/data/feedback/"
     for file in get_feedback_files(src_dir):
         dictio = txt_to_dictionary(src_dir, file)
         serialized_data = serialize_dict(dictio)
-        print(serialized_data)
+        url = "http://35.192.134.141/feedback/"
+        response = send_to_endpoint(serialized_data, url)
+        print(response.status_code)
